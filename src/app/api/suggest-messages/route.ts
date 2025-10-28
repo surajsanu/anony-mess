@@ -24,14 +24,15 @@ export async function POST(_req: Request) {
         },
     });
    return NextResponse.json({ text: result.text });
-  } catch (error) {
-    if (error instanceof OpenAI.APIError) {
-      const { name, status, headers, message } = error;
+  } catch (err) {
+    if (err instanceof OpenAI.APIError) {
+      const { name, status, headers, message } = err;
       return NextResponse.json({ name, status, headers, message }, { status });
     } else {
-      console.error('An unexpected error occurred:', error);
+      const error = err as Error;
+      console.error('An unexpected error occurred:', error.message);
       return NextResponse.json(
-        { error: 'Internal Server Error', details: (error as Error).message },
+        { error: 'Internal Server Error', details: error.message },
         { status: 500 }
       );
     }

@@ -3,6 +3,8 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import dbConnect from '@/lib/dbConnect';
 import UserModel from '@/model/User';
+import { MongoUser } from '@/types/mongo';
+import { Document } from 'mongoose';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -13,15 +15,19 @@ export const authOptions: NextAuthOptions = {
         email: { label: 'Email', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials: any): Promise<any> {
+      async authorize(credentials): Promise<any> {
+        if (!credentials?.email || !credentials?.password) {
+          return null;
+        }
+
         await dbConnect();
         try {
           const user = await UserModel.findOne({
-            $or: [                     //mongoose or operator can find by email or username
-              { email: credentials.identifier },
-              { username: credentials.identifier },
+            $or: [                     // mongoose or operator can find by email or username
+              { email: credentials.email },
+              { username: credentials.email },
             ],
-          });
+          }) as (Document & MongoUser) | null;
           if (!user) {
             throw new Error('No user found with this email');
           }
@@ -32,13 +38,23 @@ export const authOptions: NextAuthOptions = {
             credentials.password,
             user.password
           );
-          if (isPasswordCorrect) {
-            return user;
-          } else {
+          if (!isPasswordCorrect) {
             throw new Error('Incorrect password');
           }
-        } catch (err: any) {
-          throw new Error(err);
+          
+          // Convert MongoDB document to a plain object with correct types
+          const userToReturn = {
+            id: user._id.toString(),  // NextAuth expects 'id', not '_id'
+            email: user.email,
+            username: user.username,
+            isVerified: user.isVerified,
+            isAcceptingMessages: user.isAcceptingMessages
+          };
+          
+          return userToReturn;
+        } catch (err) {
+          const error = err as Error;
+          throw new Error(error.message);
         }
       },
     }),
