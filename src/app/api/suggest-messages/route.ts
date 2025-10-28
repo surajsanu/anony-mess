@@ -8,7 +8,7 @@ const openrouter = createOpenAI({
   apiKey: process.env.OPENROUTER_API_KEY, // Store your key in .env
 });
 
-export async function POST(_req: Request) {
+export async function POST() {
   try {
     // const { messages }: { messages: UIMessage[] } = await req.json();
     const prompt =

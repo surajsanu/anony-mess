@@ -15,7 +15,7 @@ export const authOptions: NextAuthOptions = {
         email: { label: 'Email', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials): Promise<any> {
+  async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
@@ -60,7 +60,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+  async jwt({ token, user }) {
       if (user) {
         token._id = user._id?.toString(); // Convert ObjectId to string
         token.isVerified = user.isVerified;
