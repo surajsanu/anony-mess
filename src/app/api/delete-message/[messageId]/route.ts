@@ -6,11 +6,11 @@ import { authOptions } from '../../auth/[...nextauth]/options';
 
 export async function DELETE(
   request: Request,
-  { params }: { params: any }
+  { params }: { params: { messageId: string | Promise<string> } }
 ) {
   // `params` can be a promise-like value in some Next.js runtimes — await it
   // before accessing properties to avoid the sync-dynamic-apis error.
-  const { messageId } = (await params) as { messageId: string };
+  const messageId = await (typeof params.messageId === 'string' ? params.messageId : params.messageId);
   await dbConnect();
   const session = await getServerSession(authOptions);
   const user: User = session?.user as User;

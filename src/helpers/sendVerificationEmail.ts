@@ -31,9 +31,9 @@ export async function sendVerificationEmail(
       return { success: false, message: `Failed to send verification email: ${error?.message ?? String(error)}`};
     } 
     return { success: true, message: `Verification email sent successfully : ${data}` };
-  } catch (emailError: any) {
-    // Include the underlying error message in logs and response to make debugging easier.
-    console.error('Error sending verification email:', emailError?.message ?? emailError);
-    return { success: false, message: `Failed to send verification email: ${emailError?.message ?? String(emailError)}` };
+  } catch (error) {
+    const emailError = error as Error;
+    console.error('Error sending verification email:', emailError.message || 'Unknown error');
+    return { success: false, message: `Failed to send verification email: ${emailError.message || 'Unknown error'}` };
   }
 }
