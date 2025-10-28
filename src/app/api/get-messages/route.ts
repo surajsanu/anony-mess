@@ -33,6 +33,12 @@ export async function GET(request: Request) {
         { status: 404 }
       );
     }
+    if(user.length === 0){
+      return Response.json(
+        { message: `You dont't have any messages yet `, success: false },
+        { status: 404 }
+      );
+    }
 
     return Response.json(
       { messages: user[0].messages },

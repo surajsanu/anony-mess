@@ -2,7 +2,12 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-function Input({ className, type, ...props }: React.ComponentProps<"input">) {
+function Input({ className, type, value, ...props }: React.ComponentProps<"input">) {
+  // Ensure the input is always controlled to avoid the
+  // "A component is changing an uncontrolled input to be controlled" warning.
+  // If `value` is undefined, coerce to an empty string so the input remains controlled.
+  const safeValue = (value ?? '') as React.ComponentProps<'input'>['value'];
+
   return (
     <input
       type={type}
@@ -13,6 +18,7 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
         "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
         className
       )}
+      value={safeValue}
       {...props}
     />
   )

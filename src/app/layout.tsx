@@ -3,11 +3,13 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import AuthProvider from '../context/AuthProvider';
 import { Toaster } from "@/components/ui/sonner"
+
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'True Feedback',
-  description: 'Real feedback from real people.',
+  title: 'Mystery Message',
+  description: 'Anonymous Message for Anyone You Want',
 };
 
 interface RootLayoutProps {

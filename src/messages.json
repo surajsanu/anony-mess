@@ -1,0 +1,37 @@
+[
+  {
+    "title": "Message from CodeCrafter",
+    "content": "Your last project looked super clean. What stack did you use?",
+    "received": "5 minutes ago"
+  },
+  {
+    "title": "Message from PixelPilot",
+    "content": "Loved your portfolio design! Did you build it with Next.js?",
+    "received": "20 minutes ago"
+  },
+  {
+    "title": "Message from TechGuru",
+    "content": "Would you be open to collaborating on a small open-source idea?",
+    "received": "1 hour ago"
+  },
+  {
+    "title": "Message from SecretAdmirer",
+    "content": "You have a great eye for design. Your UI choices are impressive.",
+    "received": "3 hours ago"
+  },
+  {
+    "title": "Message from NightThinker",
+    "content": "What’s your take on balancing creativity with productivity?",
+    "received": "8 hours ago"
+  },
+  {
+    "title": "Message from BookNerd",
+    "content": "Any recommendations for books that blend tech and philosophy?",
+    "received": "1 day ago"
+  },
+  {
+    "title": "Message from CuriousMind",
+    "content": "Do you think AI will ever truly replace human creativity?",
+    "received": "3 days ago"
+  }
+]
