@@ -1,5 +1,5 @@
 import { createOpenAI } from '@ai-sdk/openai';
-import { UIMessage,generateText } from 'ai';
+import { generateText } from 'ai';
 import OpenAI from 'openai';
 import { NextResponse } from 'next/server';
 

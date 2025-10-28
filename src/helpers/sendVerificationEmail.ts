@@ -17,8 +17,8 @@ export async function sendVerificationEmail(
     // Render the component to a React element by calling it (file is .ts so JSX isn't allowed here).
     const reactElement = VerificationEmail({ username, otp: verifyCode });
 
-    const sendResponse = await resend.emails.send({
-      from: 'onboarding@resend.dev',
+     const { data, error }  = await resend.emails.send({
+      from:  'Mystery Message : <onboarding@resend.dev>',
       to: email,
       subject: 'Mystery Message Verification Code',
       react: reactElement,
@@ -27,7 +27,10 @@ export async function sendVerificationEmail(
     // Log the provider response for easier debugging (message id, status, etc.)
     // console.info('Resend send response:', sendResponse);
 
-    return { success: true, message: 'Verification email sent successfully.' };
+    if (error) {
+      return { success: false, message: `Failed to send verification email: ${error?.message ?? String(error)}`};
+    } 
+    return { success: true, message: `Verification email sent successfully : ${data}` };
   } catch (emailError: any) {
     // Include the underlying error message in logs and response to make debugging easier.
     console.error('Error sending verification email:', emailError?.message ?? emailError);
